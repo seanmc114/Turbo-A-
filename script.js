@@ -157,9 +157,7 @@ const LEVELS = { /* ...the data... */ };
 // Alias for compatibility:
 const Present = LEVELS;
 
-// If you use ES modules:
-export { Present };
-export default Present;
+
 
   // ===================== Global cheats =====================
   const clampCheats = n => Math.max(0, Math.min(GLOBAL_CHEATS_MAX, n|0));
