@@ -884,6 +884,24 @@ function expectsFeminine(es){
   // Add more patterns here if you introduce others later (e.g., "ocupada", "tranquila")
   return false;
 }
+// ...storage helpers...
+function isUnlocked(tense, lvl){ /* ... */ }
+
+// <<< paste the whole helper here >>>
+//
+// ===== Gender hint: show when the answer expects a feminine form =====
+function expectsFeminine(es){
+  const t = (es || "").trim();
+  if (/^(Eres|Estas)\s+[A-Za-zÁÉÍÓÚáéíóúüÜ]+a\./.test(t)) return true;
+  if (/\bbonita\b/i.test(t)) return true;
+  if (/\blista\b/i.test(t))  return true;
+  if (/\btu amiga\b/i.test(t)) return true;
+  return false;
+}
+
+// Next line already in your file:
+function renderQuiz(){
+  // ...
 
   function renderQuiz(){
     const qwrap=$("#questions"); if(!qwrap) return; qwrap.innerHTML="";
