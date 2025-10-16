@@ -869,6 +869,21 @@ function cmpAnswer(user, expected){
 
     renderQuiz(); startTimer();
   }
+// ===== Gender hint: show when the answer expects a feminine form =====
+function expectsFeminine(es){
+  const t = (es || "").trim();
+
+  // 2nd-person adjective: "Eres/Estas + adjective-a."
+  if (/^(Eres|Estas)\s+[A-Za-zÁÉÍÓÚáéíóúüÜ]+a\./.test(t)) return true;
+
+  // Common explicit feminine cues you use in the dataset
+  if (/\bbonita\b/.test(t)) return true;   // Eres bonita.
+  if (/\blista\b/.test(t))  return true;   // Estas lista.
+  if (/\btu amiga\b/i.test(t)) return true; // Maria es tu amiga.
+
+  // Add more patterns here if you introduce others later (e.g., "ocupada", "tranquila")
+  return false;
+}
 
   function renderQuiz(){
     const qwrap=$("#questions"); if(!qwrap) return; qwrap.innerHTML="";
