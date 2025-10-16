@@ -154,9 +154,12 @@ const GLOBAL_CHEATS_KEY = `${GAME_ID}:globalCheats`;
       { en: "We have enough time.", es: "Tenemos suficiente tiempo." },
     ],
   };
-// ===== TENSE BUTTONS RESCUE (paste right after DATASETS is defined) =====
-(function tenseButtonsRescue(){
-  // Map any label/data attribute to canonical DATASETS keys
+// ===== FINAL TENSE BUTTONS FIX (paste immediately after DATASETS) =====
+(function forceTenseButtonsOnline(){
+  // 0) Diagnostics
+  console.log("[TQ] DATASETS keys:", Object.keys(DATASETS||{}));
+
+  // A. helpers
   function normalizeTenseKey(x){
     const k = String(x||"").trim().toLowerCase();
     if (k === "present") return "Present";
@@ -164,24 +167,29 @@ const GLOBAL_CHEATS_KEY = `${GAME_ID}:globalCheats`;
     if (k === "future")  return "Future";
     return null;
   }
-
-  // Visual active state
   function setActiveTenseButton(t){
     $$("#tense-buttons .tense-button").forEach(b=>{
       const key = normalizeTenseKey(b.dataset.tense || b.textContent);
       b.classList.toggle("active", key === t);
+      // Make absolutely sure clicks are allowed
+      b.style.pointerEvents = "auto";
     });
   }
-
-  // Safe switch (only if dataset exists)
   function selectTense(t){
-    if (!DATASETS || !DATASETS[t]) return;   // guard
+    if (!DATASETS || !DATASETS[t]) {
+      console.warn("[TQ] selectTense: dataset missing for", t);
+      return;
+    }
     CURRENT_TENSE = t;
     setActiveTenseButton(t);
-    backToLevels();                          // re-render
+    backToLevels();
   }
 
-  // 1) Clicks via event delegation (robust to load order and markup changes)
+  // B. Kill any overlay that could be blocking clicks (just in case)
+  const ghost = document.querySelector(".tq-celebrate-overlay");
+  if (ghost) { try { ghost.remove(); } catch(_) {} }
+
+  // C. Event delegation (works even if buttons are re-rendered)
   document.addEventListener("click", (e)=>{
     const btn = e.target.closest?.(".tense-button");
     if (!btn || !btn.closest("#tense-buttons")) return;
@@ -190,22 +198,30 @@ const GLOBAL_CHEATS_KEY = `${GAME_ID}:globalCheats`;
     if (key) selectTense(key);
   });
 
-  // 2) Initial activation (in case DOMContentLoaded missed or order changed)
+  // D. Also attach direct handlers once for immediate responsiveness
+  const btns = $$("#tense-buttons .tense-button");
+  console.log("[TQ] Found tense buttons:", btns.length);
+  btns.forEach(btn=>{
+    const key = normalizeTenseKey(btn.dataset.tense || btn.textContent);
+    if (!key) return;
+    btn.onclick = (ev)=>{ ev.preventDefault(); selectTense(key); };
+    btn.tabIndex = 0;
+  });
+
+  // E. Initialize default if nothing is active/rendered yet
   const DEFAULT_TENSE = "Present";
-  if (!DATASETS || !DATASETS[DEFAULT_TENSE]) {
-    // Build fallback DATASETS from Present variable if needed
-    const deepCopy = obj => JSON.parse(JSON.stringify(obj));
-    if (typeof Present !== "undefined") {
-      window.DATASETS = { Present: Present, Past: deepCopy(Present), Future: deepCopy(Present) };
-    }
+  if (!$("#tense-buttons .tense-button.active")) {
+    setActiveTenseButton(DEFAULT_TENSE);
   }
-  // Set default active & render once
-  setActiveTenseButton(DEFAULT_TENSE);
   if (!$("#level-list")?.children?.length) {
     CURRENT_TENSE = DEFAULT_TENSE;
     renderLevels();
   }
+
+  // F. Log clickability test
+  console.log("[TQ] Tense buttons wired. Current:", CURRENT_TENSE);
 })();
+
 
   // ✅ Present alias (what the rest of the app expects)
   const Present = LEVELS;
