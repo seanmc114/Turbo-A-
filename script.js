@@ -411,6 +411,22 @@
 
     renderQuiz(); startTimer();
   }
+// ===== Copula hint: detect whether the target uses "ser" or "estar"
+function whichCopula(es){
+  const t = (es || "").trim()
+    .replace(/[^\p{L}\p{N}\s]/gu, "") // drop punctuation
+    .toLowerCase();
+
+  // direct start (covers many of your lines)
+  if (/^(es|eres|soy|somos|son|era|eras|eran|sera|seras|seran|fui|fuiste|fue|fuimos|fueron)\b/.test(t)) return "ser";
+  if (/^(esta|estas|estoy|estan|estamos|estuve|estuviste|estuvo|estuvimos|estuvieron|estara|estaras|estaran|estaremos)\b/.test(t)) return "estar";
+
+  // anywhere in the sentence (e.g., "La idea es buena.", "Tu telefono esta en la mesa.")
+  if (/\b(es|eres|soy|somos|son|era|eras|eran|sera|seras|seran|fui|fuiste|fue|fuimos|fueron)\b/.test(t)) return "ser";
+  if (/\b(esta|estas|estoy|estan|estamos|estuve|estuviste|estuvo|estuvimos|estuvieron|estara|estaras|estaran|estaremos)\b/.test(t)) return "estar";
+
+  return null;
+}
 
   function renderQuiz(){
     const qwrap=$("#questions"); if(!qwrap) return; qwrap.innerHTML="";
