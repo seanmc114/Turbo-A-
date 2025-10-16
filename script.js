@@ -14,8 +14,12 @@
   const BASE_THRESH = { 1:200, 2:180, 3:160, 4:140, 5:120, 6:100, 7:80, 8:60, 9:40 };
 
   // Global Spanish-read tokens (cap 7, commit-on-finish)
-  const GLOBAL_CHEATS_MAX = 7;
-  const GLOBAL_CHEATS_KEY = "tqplus:v3:globalCheats";
+  // Unique namespace for THIS game (prevents clash with old game data)
+const GAME_ID = "tqplus:statements-v1";
+
+const GLOBAL_CHEATS_MAX = 7;
+const GLOBAL_CHEATS_KEY = `${GAME_ID}:globalCheats`;
+
 
   // ===================== DATA (Present statements) =====================
   // ⚠️ This is your new Present dataset (statements, not questions)
@@ -238,7 +242,8 @@ document.addEventListener("click", (e)=>{
   function cmpAnswer(user, expected){ return core(user) === core(expected); }
 
   // ===================== Best/unlocks (per tense) =====================
-  const STORAGE_PREFIX = "tqplus:v3";
+ const STORAGE_PREFIX = `${GAME_ID}:best`;
+
   const bestKey = (tense, lvl) => `${STORAGE_PREFIX}:best:${tense}:${lvl}`;
   function getBest(tense, lvl){ const v = localStorage.getItem(bestKey(tense,lvl)); const n = v==null?null:parseInt(v,10); return Number.isFinite(n)?n:null; }
   function saveBest(tense, lvl, score){ const prev = getBest(tense,lvl); if (prev==null || score<prev) localStorage.setItem(bestKey(tense,lvl), String(score)); }
