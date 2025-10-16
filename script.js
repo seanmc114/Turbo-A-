@@ -154,6 +154,58 @@ const GLOBAL_CHEATS_KEY = `${GAME_ID}:globalCheats`;
       { en: "We have enough time.", es: "Tenemos suficiente tiempo." },
     ],
   };
+// ===== TENSE BUTTONS RESCUE (paste right after DATASETS is defined) =====
+(function tenseButtonsRescue(){
+  // Map any label/data attribute to canonical DATASETS keys
+  function normalizeTenseKey(x){
+    const k = String(x||"").trim().toLowerCase();
+    if (k === "present") return "Present";
+    if (k === "past")    return "Past";
+    if (k === "future")  return "Future";
+    return null;
+  }
+
+  // Visual active state
+  function setActiveTenseButton(t){
+    $$("#tense-buttons .tense-button").forEach(b=>{
+      const key = normalizeTenseKey(b.dataset.tense || b.textContent);
+      b.classList.toggle("active", key === t);
+    });
+  }
+
+  // Safe switch (only if dataset exists)
+  function selectTense(t){
+    if (!DATASETS || !DATASETS[t]) return;   // guard
+    CURRENT_TENSE = t;
+    setActiveTenseButton(t);
+    backToLevels();                          // re-render
+  }
+
+  // 1) Clicks via event delegation (robust to load order and markup changes)
+  document.addEventListener("click", (e)=>{
+    const btn = e.target.closest?.(".tense-button");
+    if (!btn || !btn.closest("#tense-buttons")) return;
+    e.preventDefault();
+    const key = normalizeTenseKey(btn.dataset.tense || btn.textContent);
+    if (key) selectTense(key);
+  });
+
+  // 2) Initial activation (in case DOMContentLoaded missed or order changed)
+  const DEFAULT_TENSE = "Present";
+  if (!DATASETS || !DATASETS[DEFAULT_TENSE]) {
+    // Build fallback DATASETS from Present variable if needed
+    const deepCopy = obj => JSON.parse(JSON.stringify(obj));
+    if (typeof Present !== "undefined") {
+      window.DATASETS = { Present: Present, Past: deepCopy(Present), Future: deepCopy(Present) };
+    }
+  }
+  // Set default active & render once
+  setActiveTenseButton(DEFAULT_TENSE);
+  if (!$("#level-list")?.children?.length) {
+    CURRENT_TENSE = DEFAULT_TENSE;
+    renderLevels();
+  }
+})();
 
   // ✅ Present alias (what the rest of the app expects)
   const Present = LEVELS;
