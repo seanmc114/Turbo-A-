@@ -18,20 +18,148 @@
   const GLOBAL_CHEATS_KEY = "tqplus:v3:globalCheats";
 
   // ===================== DATA (present-based for all tenses) =====================
-  const PRESENT = {
-    1:[{en:"Who?",es:"¿Quién?"},{en:"What?",es:"¿Qué?"},{en:"Where?",es:"¿Dónde?"},{en:"When?",es:"¿Cuándo?"},{en:"Why?",es:"¿Por qué?"},{en:"How?",es:"¿Cómo?"},{en:"Which?",es:"¿Cuál?"},{en:"Whose?",es:"¿De quién?"},{en:"How many?",es:"¿Cuántos?"},{en:"How much?",es:"¿Cuánto?"},{en:"From where?",es:"¿De dónde?"},{en:"To where?",es:"¿Adónde?"},{en:"Since when?",es:"¿Desde cuándo?"},{en:"Until when?",es:"¿Hasta cuándo?"},{en:"How often?",es:"¿Con qué frecuencia?"},{en:"How old?",es:"¿Cuántos años?"}],
-    2:[{en:"Who is it?",es:"¿Quién es?"},{en:"What is it?",es:"¿Qué es?"},{en:"Where are you?",es:"¿Dónde estás?"},{en:"When is it?",es:"¿Cuándo es?"},{en:"Why is it cold?",es:"¿Por qué hace frío?"},{en:"How are you?",es:"¿Cómo estás?"},{en:"Which one?",es:"¿Cuál?"},{en:"Whose book is it?",es:"¿De quién es el libro?"},{en:"How many students?",es:"¿Cuántos estudiantes?"},{en:"How much money?",es:"¿Cuánto dinero?"},{en:"Where is it?",es:"¿Dónde está?"},{en:"When do we meet?",es:"¿Cuándo nos vemos?"}],
-    3:[{en:"Who are you?",es:"¿Quién eres?"},{en:"What do you want?",es:"¿Qué quieres?"},{en:"Where do you live?",es:"¿Dónde vives?"},{en:"When do you study?",es:"¿Cuándo estudias?"},{en:"Why are you here?",es:"¿Por qué estás aquí?"},{en:"How do you feel?",es:"¿Cómo te sientes?"},{en:"Which is your house?",es:"¿Cuál es tu casa?"},{en:"Whose idea is it?",es:"¿De quién es la idea?"},{en:"How many brothers do you have?",es:"¿Cuántos hermanos tienes?"},{en:"How much water do you drink?",es:"¿Cuánta agua bebes?"}],
-    4:[{en:"Who is your teacher?",es:"¿Quién es tu profesor?"},{en:"What time is it?",es:"¿Qué hora es?"},{en:"Where do you work?",es:"¿Dónde trabajas?"},{en:"When do you sleep?",es:"¿Cuándo duermes?"},{en:"Why are you sad?",es:"¿Por qué estás triste?"},{en:"How do you learn?",es:"¿Cómo aprendes?"},{en:"Which subject do you like?",es:"¿Qué asignatura te gusta?"},{en:"Whose car is this?",es:"¿De quién es este coche?"},{en:"How many friends do you have?",es:"¿Cuántos amigos tienes?"},{en:"How long is the class?",es:"¿Cuánto dura la clase?"}],
-    5:[{en:"Who are they?",es:"¿Quiénes son ellos?"},{en:"What are you doing?",es:"¿Qué haces?"},{en:"Where are you going?",es:"¿Adónde vas?"},{en:"When do you arrive?",es:"¿Cuándo llegas?"},{en:"Why are you late?",es:"¿Por qué llegas tarde?"},{en:"How do you know?",es:"¿Cómo sabes?"},{en:"Which one do you prefer?",es:"¿Cuál prefieres?"},{en:"Whose idea is that?",es:"¿De quién es esa idea?"},{en:"How many languages do you speak?",es:"¿Cuántos idiomas hablas?"},{en:"How much time do we have?",es:"¿Cuánto tiempo tenemos?"}],
-    6:[{en:"Who helps you?",es:"¿Quién te ayuda?"},{en:"What do you need?",es:"¿Qué necesitas?"},{en:"Where is your house?",es:"¿Dónde está tu casa?"},{en:"When do you eat lunch?",es:"¿Cuándo almuerzas?"},{en:"Why do you study Spanish?",es:"¿Por qué estudias español?"},{en:"How do you get to school?",es:"¿Cómo llegas a la escuela?"},{en:"Which class are you in?",es:"¿En qué clase estás?"},{en:"Whose turn is it?",es:"¿De quién es el turno?"},{en:"How many pets do you have?",es:"¿Cuántas mascotas tienes?"},{en:"How much does it cost?",es:"¿Cuánto cuesta?"}],
-    7:[{en:"Who helps you at home?",es:"¿Quién te ayuda en casa?"},{en:"What do you eat for breakfast?",es:"¿Qué desayunas?"},{en:"Where do you go on weekends?",es:"¿Adónde vas los fines de semana?"},{en:"When do you wake up?",es:"¿Cuándo te despiertas?"},{en:"Why do you run?",es:"¿Por qué corres?"},{en:"How do you feel today?",es:"¿Cómo te sientes hoy?"},{en:"Which movie do you like?",es:"¿Qué película te gusta?"},{en:"Whose phone is this?",es:"¿De quién es este teléfono?"},{en:"How many hours do you study?",es:"¿Cuántas horas estudias?"},{en:"How much homework do you have?",es:"¿Cuánta tarea tienes?"}],
-    8:[{en:"Who is calling?",es:"¿Quién llama?"},{en:"What are they doing?",es:"¿Qué hacen?"},{en:"Where do you go every day?",es:"¿Adónde vas cada día?"},{en:"When do you finish work?",es:"¿Cuándo terminas el trabajo?"},{en:"Why are you tired?",es:"¿Por qué estás cansado?"},{en:"How do you travel to school?",es:"¿Cómo viajas a la escuela?"},{en:"Which color do you like?",es:"¿Qué color te gusta?"},{en:"Whose bag is that?",es:"¿De quién es esa bolsa?"},{en:"How many people live here?",es:"¿Cuántas personas viven aquí?"},{en:"How much water do you drink every day?",es:"¿Cuánta agua bebes cada día?"}],
-    9:[{en:"Who opens the door?",es:"¿Quién abre la puerta?"},{en:"What do you say?",es:"¿Qué dices?"},{en:"Where do you go after class?",es:"¿Adónde vas después de clase?"},{en:"When do you arrive at school?",es:"¿Cuándo llegas a la escuela?"},{en:"Why do you leave early?",es:"¿Por qué te vas temprano?"},{en:"How do you do it?",es:"¿Cómo lo haces?"},{en:"Which car do you choose?",es:"¿Qué coche eliges?"},{en:"Whose shoes are these?",es:"¿De quién son estos zapatos?"},{en:"How many students pass?",es:"¿Cuántos estudiantes aprueban?"},{en:"How much milk do you drink?",es:"¿Cuánta leche bebes?"}],
-    10:[{en:"Who are you waiting for?",es:"¿A quién esperas?"},{en:"What are you thinking about?",es:"¿En qué piensas?"},{en:"Where do you want to go?",es:"¿Adónde quieres ir?"},{en:"When do you return home?",es:"¿Cuándo vuelves a casa?"},{en:"Why are you here?",es:"¿Por qué estás aquí?"},{en:"How do you learn so much?",es:"¿Cómo aprendes tanto?"},{en:"Which of these do you prefer?",es:"¿Cuál de estos prefieres?"},{en:"Whose turn is it to cook?",es:"¿De quién es el turno de cocinar?"},{en:"How many books do you read?",es:"¿Cuántos libros lees?"},{en:"How much time do we have?",es:"¿Cuánto tiempo tenemos?"}]
-  };
+  const LEVELS = {
+  1: [
+    { en: "You are happy.", es: "Estas feliz." },
+    { en: "You are tall.", es: "Eres alto." },
+    { en: "You are in class.", es: "Estas en clase." },
+    { en: "You are kind.", es: "Eres amable." },
+    { en: "You are tired.", es: "Estas cansado." },
+    { en: "You are ready.", es: "Estas lista." },
+    { en: "You are calm.", es: "Estas tranquilo." },
+    { en: "You are funny.", es: "Eres gracioso." },
+    { en: "You are strong.", es: "Eres fuerte." },
+    { en: "You are beautiful.", es: "Eres bonita." },
+  ],
+
+  2: [
+    { en: "It is a cat.", es: "Es un gato." },
+    { en: "It is a dog.", es: "Es un perro." },
+    { en: "It is a sunny day.", es: "Es un dia soleado." },
+    { en: "It is cold.", es: "Hace frio." },
+    { en: "You are at home.", es: "Estas en casa." },
+    { en: "It is blue.", es: "Es azul." },
+    { en: "It is big.", es: "Es grande." },
+    { en: "It is small.", es: "Es pequeno." },
+    { en: "It is interesting.", es: "Es interesante." },
+    { en: "It is beautiful.", es: "Es bonito." },
+  ],
+
+  3: [
+    { en: "You live in Madrid.", es: "Vives en Madrid." },
+    { en: "You study Spanish.", es: "Estudias espanol." },
+    { en: "You play football.", es: "Juegas al futbol." },
+    { en: "You like chocolate.", es: "Te gusta el chocolate." },
+    { en: "You work hard.", es: "Trabajas mucho." },
+    { en: "You read books.", es: "Lees libros." },
+    { en: "You eat fruit.", es: "Comes fruta." },
+    { en: "You drink water.", es: "Bebes agua." },
+    { en: "You listen to music.", es: "Escuchas musica." },
+    { en: "You sing well.", es: "Cantas bien." },
+  ],
+
+  4: [
+    { en: "Carlos is your teacher.", es: "Carlos es tu profesor." },
+    { en: "Ana is at school.", es: "Ana esta en la escuela." },
+    { en: "You sleep early.", es: "Duermes temprano." },
+    { en: "You run fast.", es: "Corres rapido." },
+    { en: "You learn every day.", es: "Aprendes cada dia." },
+    { en: "You work in an office.", es: "Trabajas en una oficina." },
+    { en: "You like English.", es: "Te gusta el ingles." },
+    { en: "You walk to school.", es: "Caminas a la escuela." },
+    { en: "Maria is your friend.", es: "Maria es tu amiga." },
+    { en: "You are busy.", es: "Estas ocupado." },
+  ],
+
+  5: [
+    { en: "They are students.", es: "Son estudiantes." },
+    { en: "You are playing football.", es: "Juegas al futbol." },
+    { en: "You are going to the park.", es: "Vas al parque." },
+    { en: "You arrive early.", es: "Llegas temprano." },
+    { en: "You are never late.", es: "Nunca llegas tarde." },
+    { en: "You know a lot.", es: "Sabes mucho." },
+    { en: "You prefer apples.", es: "Prefieres manzanas." },
+    { en: "The idea is good.", es: "La idea es buena." },
+    { en: "You speak Spanish.", es: "Hablas espanol." },
+    { en: "We have time.", es: "Tenemos tiempo." },
+  ],
+
+  6: [
+    { en: "Luis helps you.", es: "Luis te ayuda." },
+    { en: "You need a pencil.", es: "Necesitas un lapiz." },
+    { en: "Your house is big.", es: "Tu casa es grande." },
+    { en: "You eat lunch at twelve.", es: "Almuerzas a las doce." },
+    { en: "You study Spanish.", es: "Estudias espanol." },
+    { en: "You go to school by bus.", es: "Vas a la escuela en autobus." },
+    { en: "You are in class five.", es: "Estas en la clase cinco." },
+    { en: "It is your turn.", es: "Es tu turno." },
+    { en: "You have two pets.", es: "Tienes dos mascotas." },
+    { en: "It costs ten euros.", es: "Cuesta diez euros." },
+  ],
+
+  7: [
+    { en: "You help at home.", es: "Ayudas en casa." },
+    { en: "You eat breakfast at eight.", es: "Desayunas a las ocho." },
+    { en: "You go out on weekends.", es: "Sales los fines de semana." },
+    { en: "You wake up early.", es: "Te despiertas temprano." },
+    { en: "You run every morning.", es: "Corres cada manana." },
+    { en: "You feel good today.", es: "Te sientes bien hoy." },
+    { en: "You like this movie.", es: "Te gusta esta pelicula." },
+    { en: "Your phone is on the table.", es: "Tu telefono esta en la mesa." },
+    { en: "You study two hours.", es: "Estudias dos horas." },
+    { en: "You have little homework.", es: "Tienes poca tarea." },
+  ],
+
+  8: [
+    { en: "Someone is calling.", es: "Alguien llama." },
+    { en: "They are working.", es: "Trabajan." },
+    { en: "You go to school every day.", es: "Vas a la escuela cada dia." },
+    { en: "You finish work at three.", es: "Terminas el trabajo a las tres." },
+    { en: "You are tired now.", es: "Estas cansado ahora." },
+    { en: "You travel by train.", es: "Viajas en tren." },
+    { en: "You like the color blue.", es: "Te gusta el color azul." },
+    { en: "Your bag is new.", es: "Tu bolsa es nueva." },
+    { en: "Many people live here.", es: "Mucha gente vive aqui." },
+    { en: "You drink water every day.", es: "Bebes agua cada dia." },
+  ],
+
+  9: [
+    { en: "You open the door.", es: "Abres la puerta." },
+    { en: "You say good morning.", es: "Dices buenos dias." },
+    { en: "You go home after class.", es: "Vas a casa despues de clase." },
+    { en: "You arrive at school early.", es: "Llegas a la escuela temprano." },
+    { en: "You leave at four.", es: "Te vas a las cuatro." },
+    { en: "You do your homework.", es: "Haces tu tarea." },
+    { en: "You choose a car.", es: "Eliges un coche." },
+    { en: "Your shoes are clean.", es: "Tus zapatos son limpios." },
+    { en: "Students pass the exam.", es: "Los estudiantes aprueban el examen." },
+    { en: "You drink milk.", es: "Bebes leche." },
+  ],
+
+  10: [
+    { en: "You wait for Ana.", es: "Esperas a Ana." },
+    { en: "You think about your friends.", es: "Piensas en tus amigos." },
+    { en: "You want to travel.", es: "Quieres viajar." },
+    { en: "You return home at six.", es: "Vuelves a casa a las seis." },
+    { en: "You are here now.", es: "Estas aqui ahora." },
+    { en: "You learn a lot.", es: "Aprendes mucho." },
+    { en: "You prefer these shoes.", es: "Prefieres estos zapatos." },
+    { en: "It is your turn to cook.", es: "Es tu turno de cocinar." },
+    { en: "You read many books.", es: "Lees muchos libros." },
+    { en: "We have enough time.", es: "Tenemos suficiente tiempo." },
+  ],
+};
+
   const deepCopy = obj => JSON.parse(JSON.stringify(obj));
   const DATASETS = { Present: PRESENT, Past: deepCopy(PRESENT), Future: deepCopy(PRESENT) };
+const LEVELS = { /* ...the data... */ };
+
+// Alias for compatibility:
+const Present = LEVELS;
+
+// If you use ES modules:
+export { Present };
+export default Present;
 
   // ===================== Global cheats =====================
   const clampCheats = n => Math.max(0, Math.min(GLOBAL_CHEATS_MAX, n|0));
