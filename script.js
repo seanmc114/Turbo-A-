@@ -692,21 +692,34 @@
   function isUnlocked(tense, lvl){ if (lvl===1) return true; const need = BASE_THRESH[lvl-1]; const prev = getBest(tense,lvl-1); return prev!=null && (need==null || prev<=need); }
 
   // ===================== Compare (STATEMENTS MODE) =====================
-  const norm = s => (s||"").trim();
+ // Accents REQUIRED; capitals/punctuation/extra spaces IGNORED
+const norm = s => (s||"").trim();
 
 function core(s){
-  // Keep accents; only trim spaces and optional question marks.
   let t = norm(s);
+
+  // drop optional Spanish question marks
   if (t.startsWith("¿")) t = t.slice(1);
   if (t.endsWith("?"))  t = t.slice(0,-1);
-  t = t.replace(/\s+/g, " ");   // collapse internal spaces
-  return t.toLowerCase();       // capitals don't matter; accents preserved
+
+  // collapse internal whitespace
+  t = t.replace(/\s+/g, " ");
+
+  // remove punctuation completely (keep letters with accents and digits)
+  // \p{L} = any letter (keeps áéíóú… and ñ), \p{N} = numbers
+  t = t.replace(/[^\p{L}\p{N}\s]/gu, "");
+
+  // comply with “ñ not needed on keyboards”: treat ñ like n for comparison
+  t = t.replace(/ñ/gi, "n");
+
+  // case-insensitive compare (accents preserved!)
+  return t.toLowerCase();
 }
 
 function cmpAnswer(user, expected){
   return core(user) === core(expected);
 }
-
+ 
   // ===================== Speech helpers =====================
   function speak(text, lang="es-ES"){ try{ if(!("speechSynthesis" in window)) return; const u=new SpeechSynthesisUtterance(text); u.lang=lang; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);}catch{} }
   let rec=null, recActive=false;
