@@ -1,7 +1,7 @@
 // Turbo: Q+ Edition — Statements Mode (confetti + banner + shake)
 // New game variant: Present statements (no questions).
-// Accents kept; "ñ" avoided in data (e.g., "espanol", "manana") for keyboard.
-// LocalStorage is namespaced so it won't collide with your old game.
+// Accents are kept. "ñ" is written as "n" (per your keyboard rule).
+// Storage keys are namespaced so this won't collide with the old game.
 //
 // Drop-in replacement for script.js
 
@@ -22,81 +22,81 @@
   const GLOBAL_CHEATS_KEY = `${GAME_ID}:globalCheats`;
 
   // ===================== DATA (Present statements) =====================
-  // Accents kept; "ñ" is avoided in strings by design (e.g., "espanol", "manana").
+  // Accents kept. "ñ" is written as "n".
   const LEVELS = {
     1: [
-      { en: "You are happy.",            es: "Estas feliz." },
+      { en: "You are happy.",            es: "Estás feliz." },
       { en: "You are tall.",             es: "Eres alto." },
-      { en: "You are in class.",         es: "Estas en clase." },
+      { en: "You are in class.",         es: "Estás en clase." },
       { en: "You are kind.",             es: "Eres amable." },
-      { en: "You are tired.",            es: "Estas cansado." },
-      { en: "You are ready.",            es: "Estas lista." },       // feminine
-      { en: "You are calm.",             es: "Estas tranquilo." },
+      { en: "You are tired.",            es: "Estás cansado." },
+      { en: "You are ready.",            es: "Estás lista." },        // feminine
+      { en: "You are calm.",             es: "Estás tranquilo." },
       { en: "You are funny.",            es: "Eres gracioso." },
       { en: "You are strong.",           es: "Eres fuerte." },
-      { en: "You are beautiful.",        es: "Eres bonita." },       // feminine
+      { en: "You are beautiful.",        es: "Eres bonita." },        // feminine
     ],
 
     2: [
       { en: "It is a cat.",              es: "Es un gato." },
       { en: "It is a dog.",              es: "Es un perro." },
-      { en: "It is a sunny day.",        es: "Es un dia soleado." },
-      { en: "It is cold.",               es: "Hace frio." },
-      { en: "You are at home.",          es: "Estas en casa." },
+      { en: "It is a sunny day.",        es: "Es un día soleado." },
+      { en: "It is cold.",               es: "Hace frío." },
+      { en: "You are at home.",          es: "Estás en casa." },
       { en: "It is blue.",               es: "Es azul." },
       { en: "It is big.",                es: "Es grande." },
-      { en: "It is small.",              es: "Es pequeno." },        // pequeno (no ñ)
+      { en: "It is small.",              es: "Es pequeno." },          // pequeño → "pequeno" (no ñ)
       { en: "It is interesting.",        es: "Es interesante." },
       { en: "It is beautiful.",          es: "Es bonito." },
     ],
 
     3: [
       { en: "You live in Madrid.",       es: "Vives en Madrid." },
-      { en: "You study Spanish.",        es: "Estudias espanol." },  // espanol (no ñ)
-      { en: "You play football.",        es: "Juegas al futbol." },
+      { en: "You study Spanish.",        es: "Estudias espanol." },    // español → "espanol"
+      { en: "You play football.",        es: "Juegas al fútbol." },
       { en: "You like chocolate.",       es: "Te gusta el chocolate." },
       { en: "You work hard.",            es: "Trabajas mucho." },
       { en: "You read books.",           es: "Lees libros." },
       { en: "You eat fruit.",            es: "Comes fruta." },
       { en: "You drink water.",          es: "Bebes agua." },
-      { en: "You listen to music.",      es: "Escuchas musica." },
+      { en: "You listen to music.",      es: "Escuchas música." },
       { en: "You sing well.",            es: "Cantas bien." },
     ],
 
     4: [
       { en: "Carlos is your teacher.",   es: "Carlos es tu profesor." },
-      { en: "Ana is at school.",         es: "Ana esta en la escuela." },
+      { en: "Ana is at school.",         es: "Ana está en la escuela." },
       { en: "You sleep early.",          es: "Duermes temprano." },
-      { en: "You run fast.",             es: "Corres rapido." },
-      { en: "You learn every day.",      es: "Aprendes cada dia." },
+      { en: "You run fast.",             es: "Corres rápido." },
+      { en: "You learn every day.",      es: "Aprendes cada día." },
       { en: "You work in an office.",    es: "Trabajas en una oficina." },
-      { en: "You like English.",         es: "Te gusta el ingles." }, // inglés -> ingles
+      { en: "You like English.",         es: "Te gusta el inglés." },
       { en: "You walk to school.",       es: "Caminas a la escuela." },
-      { en: "Maria is your friend.",     es: "Maria es tu amiga." },  // feminine noun
-      { en: "You are busy.",             es: "Estas ocupado." },
+      { en: "María is your friend.",     es: "María es tu amiga." },   // feminine
+      { en: "You are busy.",             es: "Estás ocupado." },
     ],
 
     5: [
       { en: "They are students.",        es: "Son estudiantes." },
-      { en: "You are playing football.", es: "Juegas al futbol." },
+      { en: "You are playing football.", es: "Juegas al fútbol." },
       { en: "You are going to the park.",es: "Vas al parque." },
       { en: "You arrive early.",         es: "Llegas temprano." },
       { en: "You are never late.",       es: "Nunca llegas tarde." },
       { en: "You know a lot.",           es: "Sabes mucho." },
       { en: "You prefer apples.",        es: "Prefieres manzanas." },
-      { en: "The idea is good.",         es: "La idea es buena." },   // feminine adj
+      { en: "The idea is good.",         es: "La idea es buena." },    // feminine agreement
       { en: "You speak Spanish.",        es: "Hablas espanol." },
       { en: "We have time.",             es: "Tenemos tiempo." },
     ],
 
     6: [
       { en: "Luis helps you.",           es: "Luis te ayuda." },
-      { en: "You need a pencil.",        es: "Necesitas un lapiz." },
+      { en: "You need a pencil.",        es: "Necesitas un lápiz." },
       { en: "Your house is big.",        es: "Tu casa es grande." },
       { en: "You eat lunch at twelve.",  es: "Almuerzas a las doce." },
       { en: "You study Spanish.",        es: "Estudias espanol." },
-      { en: "You go to school by bus.",  es: "Vas a la escuela en autobus." },
-      { en: "You are in class five.",    es: "Estas en la clase cinco." },
+      { en: "You go to school by bus.",  es: "Vas a la escuela en autobús." },
+      { en: "You are in class five.",    es: "Estás en la clase cinco." },
       { en: "It is your turn.",          es: "Es tu turno." },
       { en: "You have two pets.",        es: "Tienes dos mascotas." },
       { en: "It costs ten euros.",       es: "Cuesta diez euros." },
@@ -107,10 +107,10 @@
       { en: "You eat breakfast at eight.", es: "Desayunas a las ocho." },
       { en: "You go out on weekends.",   es: "Sales los fines de semana." },
       { en: "You wake up early.",        es: "Te despiertas temprano." },
-      { en: "You run every morning.",    es: "Corres cada manana." }, // manana (no ñ)
+      { en: "You run every morning.",    es: "Corres cada manana." },  // mañana → "manana"
       { en: "You feel good today.",      es: "Te sientes bien hoy." },
-      { en: "You like this movie.",      es: "Te gusta esta pelicula." },
-      { en: "Your phone is on the table.", es: "Tu telefono esta en la mesa." },
+      { en: "You like this movie.",      es: "Te gusta esta película." },
+      { en: "Your phone is on the table.", es: "Tu teléfono está en la mesa." },
       { en: "You study two hours.",      es: "Estudias dos horas." },
       { en: "You have little homework.", es: "Tienes poca tarea." },
     ],
@@ -118,25 +118,25 @@
     8: [
       { en: "Someone is calling.",       es: "Alguien llama." },
       { en: "They are working.",         es: "Trabajan." },
-      { en: "You go to school every day.", es: "Vas a la escuela cada dia." },
+      { en: "You go to school every day.", es: "Vas a la escuela cada día." },
       { en: "You finish work at three.", es: "Terminas el trabajo a las tres." },
-      { en: "You are tired now.",        es: "Estas cansado ahora." },
+      { en: "You are tired now.",        es: "Estás cansado ahora." },
       { en: "You travel by train.",      es: "Viajas en tren." },
       { en: "You like the color blue.",  es: "Te gusta el color azul." },
-      { en: "Your bag is new.",          es: "Tu bolsa es nueva." },  // feminine adj
-      { en: "Many people live here.",    es: "Mucha gente vive aqui." },
-      { en: "You drink water every day.",es: "Bebes agua cada dia." },
+      { en: "Your bag is new.",          es: "Tu bolsa es nueva." },   // feminine
+      { en: "Many people live here.",    es: "Mucha gente vive aquí." },
+      { en: "You drink water every day.",es: "Bebes agua cada día." },
     ],
 
     9: [
       { en: "You open the door.",        es: "Abres la puerta." },
-      { en: "You say good morning.",     es: "Dices buenos dias." },
-      { en: "You go home after class.",  es: "Vas a casa despues de clase." },
+      { en: "You say good morning.",     es: "Dices buenos días." },
+      { en: "You go home after class.",  es: "Vas a casa después de clase." },
       { en: "You arrive at school early.", es: "Llegas a la escuela temprano." },
       { en: "You leave at four.",        es: "Te vas a las cuatro." },
       { en: "You do your homework.",     es: "Haces tu tarea." },
       { en: "You choose a car.",         es: "Eliges un coche." },
-      { en: "Your shoes are clean.",     es: "Tus zapatos estan limpios." },
+      { en: "Your shoes are clean.",     es: "Tus zapatos están limpios." },
       { en: "Students pass the exam.",   es: "Los estudiantes aprueban el examen." },
       { en: "You drink milk.",           es: "Bebes leche." },
     ],
@@ -146,7 +146,7 @@
       { en: "You think about your friends.", es: "Piensas en tus amigos." },
       { en: "You want to travel.",       es: "Quieres viajar." },
       { en: "You return home at six.",   es: "Vuelves a casa a las seis." },
-      { en: "You are here now.",         es: "Estas aqui ahora." },
+      { en: "You are here now.",         es: "Estás aquí ahora." },
       { en: "You learn a lot.",          es: "Aprendes mucho." },
       { en: "You prefer these shoes.",   es: "Prefieres estos zapatos." },
       { en: "It is your turn to cook.",  es: "Es tu turno de cocinar." },
@@ -164,57 +164,79 @@
   // ✅ Build datasets object using the correct Present variable
   const DATASETS = { Present: Present, Past: deepCopy(Present), Future: deepCopy(Present) };
 
-  // ===== FINAL TENSE BUTTONS FIX (robust, idempotent) =====
-  (function forceTenseButtonsOnline(){
-    function normalizeTenseKey(x){
+  // ===== FAIL-SAFE TENSE ACCESS — guarantees access & switching =====
+  (function tenseAccessFailsafe(){
+    const canon = x => {
       const k = String(x||"").trim().toLowerCase();
-      if (k === "present") return "Present";
-      if (k === "past")    return "Past";
-      if (k === "future")  return "Future";
+      if (k==="present") return "Present";
+      if (k==="past")    return "Past";
+      if (k==="future")  return "Future";
       return null;
-    }
-    function setActiveTenseButton(t){
+    };
+    function selectTense(t){
+      if (!DATASETS || !DATASETS[t]) { console.warn("[TQ] Missing dataset for:", t); return; }
+      CURRENT_TENSE = t;
       $$("#tense-buttons .tense-button").forEach(b=>{
-        const key = normalizeTenseKey(b.dataset.tense || b.textContent);
+        const key = canon(b.dataset.tense || b.textContent);
         b.classList.toggle("active", key === t);
+        b.disabled = false;
         b.style.pointerEvents = "auto";
       });
-    }
-    function selectTense(t){
-      if (!DATASETS || !DATASETS[t]) return;
-      CURRENT_TENSE = t;
-      setActiveTenseButton(t);
       backToLevels();
     }
-    // remove any celebration overlay that might capture clicks
-    const ghost = document.querySelector(".tq-celebrate-overlay");
-    if (ghost) { try { ghost.remove(); } catch(_) {} }
-
-    // Event delegation
+    // Wire existing buttons (delegation + direct)
     document.addEventListener("click", (e)=>{
-      const btn = e.target.closest?.(".tense-button");
+      const btn = e.target.closest && e.target.closest(".tense-button");
       if (!btn || !btn.closest("#tense-buttons")) return;
       e.preventDefault();
-      const key = normalizeTenseKey(btn.dataset.tense || btn.textContent);
-      if (key) selectTense(key);
+      const t = canon(btn.dataset.tense || btn.textContent);
+      if (t) selectTense(t);
     });
-
-    // Direct handlers too (for immediate responsiveness)
-    const btns = $$("#tense-buttons .tense-button");
-    btns.forEach(btn=>{
-      const key = normalizeTenseKey(btn.dataset.tense || btn.textContent);
-      if (!key) return;
-      btn.onclick = (ev)=>{ ev.preventDefault(); selectTense(key); };
-      btn.tabIndex = 0;
+    $$("#tense-buttons .tense-button").forEach(btn=>{
+      const t = canon(btn.dataset.tense || btn.textContent);
+      if (t) btn.onclick = ev => { ev.preventDefault(); selectTense(t); };
     });
-
-    // Default activation & first render
-    const DEFAULT_TENSE = "Present";
-    setActiveTenseButton(DEFAULT_TENSE);
-    if (!$("#level-list")?.children?.length) {
-      CURRENT_TENSE = DEFAULT_TENSE;
-      renderLevels();
+    // Inject a tiny toolbar if page bar is absent/broken
+    function ensureInjectedBar(){
+      if (document.getElementById("tq-failsafe-tense")) return;
+      const bar = document.createElement("div");
+      bar.id = "tq-failsafe-tense";
+      bar.style.cssText = "position:fixed;top:10px;right:10px;z-index:99999;background:#fff;border:1px solid #ddd;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.15);padding:8px 10px;font:14px/1.2 system-ui,Segoe UI,Arial";
+      bar.innerHTML = `
+        <div style="font-weight:700;margin-bottom:6px">Tense</div>
+        <div style="display:flex;gap:6px">
+          <button data-k="Present">Present</button>
+          <button data-k="Past">Past</button>
+          <button data-k="Future">Future</button>
+        </div>
+      `;
+      bar.querySelectorAll("button[data-k]").forEach(b=>{
+        b.onclick = e => { e.preventDefault(); selectTense(b.dataset.k); };
+      });
+      document.body.appendChild(bar);
     }
+    // Remove any celebration overlay that could block clicks
+    const ghost = document.querySelector(".tq-celebrate-overlay");
+    if (ghost) { try { ghost.remove(); } catch(_) {} }
+    // Boot: ensure access immediately
+    function boot(){
+      const haveButtons = !!document.querySelector("#tense-buttons .tense-button");
+      if (!haveButtons) ensureInjectedBar();
+      selectTense("Present"); // default in and render levels immediately
+    }
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", boot);
+    } else {
+      boot();
+    }
+    // Keyboard shortcuts P/A/F
+    document.addEventListener("keydown",(e)=>{
+      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+      const k = e.key.toLowerCase();
+      if (k==="p") selectTense("Present");
+      if (k==="a") selectTense("Past");
+      if (k==="f") selectTense("Future");
+    });
   })();
 
   // ===================== Global cheats =====================
@@ -231,10 +253,10 @@
   const norm = s => (s||"").trim();
   function core(s){
     let t = norm(s);
-    // tolerate accidental question marks from habit
+    // tolerate stray question marks
     if (t.startsWith("¿")) t = t.slice(1);
     if (t.endsWith("?"))  t = t.slice(0,-1);
-    // normalization: strip accents for compare; map ñ→n for fairness
+    // normalization for compare: strip accents; map ñ→n
     t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     t = t.replace(/ñ/gi, "n");
     return t.replace(/\s+/g," ").toLowerCase();
@@ -483,7 +505,7 @@
     // init global cheats
     setGlobalCheats(getGlobalCheats());
 
-    // Ensure default active button is styled if HTML provides them early
+    // style default active if your HTML provides the buttons
     const presentBtn = $(`#tense-buttons .tense-button[data-tense="Present"]`) || $$("#tense-buttons .tense-button")[0];
     if (presentBtn) presentBtn.classList.add("active");
 
