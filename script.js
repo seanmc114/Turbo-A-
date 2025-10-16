@@ -17,147 +17,148 @@
   const GLOBAL_CHEATS_MAX = 7;
   const GLOBAL_CHEATS_KEY = "tqplus:v3:globalCheats";
 
-  // ===================== DATA (present-based for all tenses) =====================
+  // ===================== DATA (Present statements) =====================
+  // ⚠️ This is your new Present dataset (statements, not questions)
   const LEVELS = {
-  1: [
-    { en: "You are happy.", es: "Estas feliz." },
-    { en: "You are tall.", es: "Eres alto." },
-    { en: "You are in class.", es: "Estas en clase." },
-    { en: "You are kind.", es: "Eres amable." },
-    { en: "You are tired.", es: "Estas cansado." },
-    { en: "You are ready.", es: "Estas lista." },
-    { en: "You are calm.", es: "Estas tranquilo." },
-    { en: "You are funny.", es: "Eres gracioso." },
-    { en: "You are strong.", es: "Eres fuerte." },
-    { en: "You are beautiful.", es: "Eres bonita." },
-  ],
+    1: [
+      { en: "You are happy.", es: "Estas feliz." },
+      { en: "You are tall.", es: "Eres alto." },
+      { en: "You are in class.", es: "Estas en clase." },
+      { en: "You are kind.", es: "Eres amable." },
+      { en: "You are tired.", es: "Estas cansado." },
+      { en: "You are ready.", es: "Estas lista." },
+      { en: "You are calm.", es: "Estas tranquilo." },
+      { en: "You are funny.", es: "Eres gracioso." },
+      { en: "You are strong.", es: "Eres fuerte." },
+      { en: "You are beautiful.", es: "Eres bonita." },
+    ],
 
-  2: [
-    { en: "It is a cat.", es: "Es un gato." },
-    { en: "It is a dog.", es: "Es un perro." },
-    { en: "It is a sunny day.", es: "Es un dia soleado." },
-    { en: "It is cold.", es: "Hace frio." },
-    { en: "You are at home.", es: "Estas en casa." },
-    { en: "It is blue.", es: "Es azul." },
-    { en: "It is big.", es: "Es grande." },
-    { en: "It is small.", es: "Es pequeno." },
-    { en: "It is interesting.", es: "Es interesante." },
-    { en: "It is beautiful.", es: "Es bonito." },
-  ],
+    2: [
+      { en: "It is a cat.", es: "Es un gato." },
+      { en: "It is a dog.", es: "Es un perro." },
+      { en: "It is a sunny day.", es: "Es un dia soleado." },
+      { en: "It is cold.", es: "Hace frio." },
+      { en: "You are at home.", es: "Estas en casa." },
+      { en: "It is blue.", es: "Es azul." },
+      { en: "It is big.", es: "Es grande." },
+      { en: "It is small.", es: "Es pequeno." },
+      { en: "It is interesting.", es: "Es interesante." },
+      { en: "It is beautiful.", es: "Es bonito." },
+    ],
 
-  3: [
-    { en: "You live in Madrid.", es: "Vives en Madrid." },
-    { en: "You study Spanish.", es: "Estudias espanol." },
-    { en: "You play football.", es: "Juegas al futbol." },
-    { en: "You like chocolate.", es: "Te gusta el chocolate." },
-    { en: "You work hard.", es: "Trabajas mucho." },
-    { en: "You read books.", es: "Lees libros." },
-    { en: "You eat fruit.", es: "Comes fruta." },
-    { en: "You drink water.", es: "Bebes agua." },
-    { en: "You listen to music.", es: "Escuchas musica." },
-    { en: "You sing well.", es: "Cantas bien." },
-  ],
+    3: [
+      { en: "You live in Madrid.", es: "Vives en Madrid." },
+      { en: "You study Spanish.", es: "Estudias espanol." },
+      { en: "You play football.", es: "Juegas al futbol." },
+      { en: "You like chocolate.", es: "Te gusta el chocolate." },
+      { en: "You work hard.", es: "Trabajas mucho." },
+      { en: "You read books.", es: "Lees libros." },
+      { en: "You eat fruit.", es: "Comes fruta." },
+      { en: "You drink water.", es: "Bebes agua." },
+      { en: "You listen to music.", es: "Escuchas musica." },
+      { en: "You sing well.", es: "Cantas bien." },
+    ],
 
-  4: [
-    { en: "Carlos is your teacher.", es: "Carlos es tu profesor." },
-    { en: "Ana is at school.", es: "Ana esta en la escuela." },
-    { en: "You sleep early.", es: "Duermes temprano." },
-    { en: "You run fast.", es: "Corres rapido." },
-    { en: "You learn every day.", es: "Aprendes cada dia." },
-    { en: "You work in an office.", es: "Trabajas en una oficina." },
-    { en: "You like English.", es: "Te gusta el ingles." },
-    { en: "You walk to school.", es: "Caminas a la escuela." },
-    { en: "Maria is your friend.", es: "Maria es tu amiga." },
-    { en: "You are busy.", es: "Estas ocupado." },
-  ],
+    4: [
+      { en: "Carlos is your teacher.", es: "Carlos es tu profesor." },
+      { en: "Ana is at school.", es: "Ana esta en la escuela." },
+      { en: "You sleep early.", es: "Duermes temprano." },
+      { en: "You run fast.", es: "Corres rapido." },
+      { en: "You learn every day.", es: "Aprendes cada dia." },
+      { en: "You work in an office.", es: "Trabajas en una oficina." },
+      { en: "You like English.", es: "Te gusta el ingles." },
+      { en: "You walk to school.", es: "Caminas a la escuela." },
+      { en: "Maria is your friend.", es: "Maria es tu amiga." },
+      { en: "You are busy.", es: "Estas ocupado." },
+    ],
 
-  5: [
-    { en: "They are students.", es: "Son estudiantes." },
-    { en: "You are playing football.", es: "Juegas al futbol." },
-    { en: "You are going to the park.", es: "Vas al parque." },
-    { en: "You arrive early.", es: "Llegas temprano." },
-    { en: "You are never late.", es: "Nunca llegas tarde." },
-    { en: "You know a lot.", es: "Sabes mucho." },
-    { en: "You prefer apples.", es: "Prefieres manzanas." },
-    { en: "The idea is good.", es: "La idea es buena." },
-    { en: "You speak Spanish.", es: "Hablas espanol." },
-    { en: "We have time.", es: "Tenemos tiempo." },
-  ],
+    5: [
+      { en: "They are students.", es: "Son estudiantes." },
+      { en: "You are playing football.", es: "Juegas al futbol." },
+      { en: "You are going to the park.", es: "Vas al parque." },
+      { en: "You arrive early.", es: "Llegas temprano." },
+      { en: "You are never late.", es: "Nunca llegas tarde." },
+      { en: "You know a lot.", es: "Sabes mucho." },
+      { en: "You prefer apples.", es: "Prefieres manzanas." },
+      { en: "The idea is good.", es: "La idea es buena." },
+      { en: "You speak Spanish.", es: "Hablas espanol." },
+      { en: "We have time.", es: "Tenemos tiempo." },
+    ],
 
-  6: [
-    { en: "Luis helps you.", es: "Luis te ayuda." },
-    { en: "You need a pencil.", es: "Necesitas un lapiz." },
-    { en: "Your house is big.", es: "Tu casa es grande." },
-    { en: "You eat lunch at twelve.", es: "Almuerzas a las doce." },
-    { en: "You study Spanish.", es: "Estudias espanol." },
-    { en: "You go to school by bus.", es: "Vas a la escuela en autobus." },
-    { en: "You are in class five.", es: "Estas en la clase cinco." },
-    { en: "It is your turn.", es: "Es tu turno." },
-    { en: "You have two pets.", es: "Tienes dos mascotas." },
-    { en: "It costs ten euros.", es: "Cuesta diez euros." },
-  ],
+    6: [
+      { en: "Luis helps you.", es: "Luis te ayuda." },
+      { en: "You need a pencil.", es: "Necesitas un lapiz." },
+      { en: "Your house is big.", es: "Tu casa es grande." },
+      { en: "You eat lunch at twelve.", es: "Almuerzas a las doce." },
+      { en: "You study Spanish.", es: "Estudias espanol." },
+      { en: "You go to school by bus.", es: "Vas a la escuela en autobus." },
+      { en: "You are in class five.", es: "Estas en la clase cinco." },
+      { en: "It is your turn.", es: "Es tu turno." },
+      { en: "You have two pets.", es: "Tienes dos mascotas." },
+      { en: "It costs ten euros.", es: "Cuesta diez euros." },
+    ],
 
-  7: [
-    { en: "You help at home.", es: "Ayudas en casa." },
-    { en: "You eat breakfast at eight.", es: "Desayunas a las ocho." },
-    { en: "You go out on weekends.", es: "Sales los fines de semana." },
-    { en: "You wake up early.", es: "Te despiertas temprano." },
-    { en: "You run every morning.", es: "Corres cada manana." },
-    { en: "You feel good today.", es: "Te sientes bien hoy." },
-    { en: "You like this movie.", es: "Te gusta esta pelicula." },
-    { en: "Your phone is on the table.", es: "Tu telefono esta en la mesa." },
-    { en: "You study two hours.", es: "Estudias dos horas." },
-    { en: "You have little homework.", es: "Tienes poca tarea." },
-  ],
+    7: [
+      { en: "You help at home.", es: "Ayudas en casa." },
+      { en: "You eat breakfast at eight.", es: "Desayunas a las ocho." },
+      { en: "You go out on weekends.", es: "Sales los fines de semana." },
+      { en: "You wake up early.", es: "Te despiertas temprano." },
+      { en: "You run every morning.", es: "Corres cada manana." },
+      { en: "You feel good today.", es: "Te sientes bien hoy." },
+      { en: "You like this movie.", es: "Te gusta esta pelicula." },
+      { en: "Your phone is on the table.", es: "Tu telefono esta en la mesa." },
+      { en: "You study two hours.", es: "Estudias dos horas." },
+      { en: "You have little homework.", es: "Tienes poca tarea." },
+    ],
 
-  8: [
-    { en: "Someone is calling.", es: "Alguien llama." },
-    { en: "They are working.", es: "Trabajan." },
-    { en: "You go to school every day.", es: "Vas a la escuela cada dia." },
-    { en: "You finish work at three.", es: "Terminas el trabajo a las tres." },
-    { en: "You are tired now.", es: "Estas cansado ahora." },
-    { en: "You travel by train.", es: "Viajas en tren." },
-    { en: "You like the color blue.", es: "Te gusta el color azul." },
-    { en: "Your bag is new.", es: "Tu bolsa es nueva." },
-    { en: "Many people live here.", es: "Mucha gente vive aqui." },
-    { en: "You drink water every day.", es: "Bebes agua cada dia." },
-  ],
+    8: [
+      { en: "Someone is calling.", es: "Alguien llama." },
+      { en: "They are working.", es: "Trabajan." },
+      { en: "You go to school every day.", es: "Vas a la escuela cada dia." },
+      { en: "You finish work at three.", es: "Terminas el trabajo a las tres." },
+      { en: "You are tired now.", es: "Estas cansado ahora." },
+      { en: "You travel by train.", es: "Viajas en tren." },
+      { en: "You like the color blue.", es: "Te gusta el color azul." },
+      { en: "Your bag is new.", es: "Tu bolsa es nueva." },
+      { en: "Many people live here.", es: "Mucha gente vive aqui." },
+      { en: "You drink water every day.", es: "Bebes agua cada dia." },
+    ],
 
-  9: [
-    { en: "You open the door.", es: "Abres la puerta." },
-    { en: "You say good morning.", es: "Dices buenos dias." },
-    { en: "You go home after class.", es: "Vas a casa despues de clase." },
-    { en: "You arrive at school early.", es: "Llegas a la escuela temprano." },
-    { en: "You leave at four.", es: "Te vas a las cuatro." },
-    { en: "You do your homework.", es: "Haces tu tarea." },
-    { en: "You choose a car.", es: "Eliges un coche." },
-    { en: "Your shoes are clean.", es: "Tus zapatos son limpios." },
-    { en: "Students pass the exam.", es: "Los estudiantes aprueban el examen." },
-    { en: "You drink milk.", es: "Bebes leche." },
-  ],
+    9: [
+      { en: "You open the door.", es: "Abres la puerta." },
+      { en: "You say good morning.", es: "Dices buenos dias." },
+      { en: "You go home after class.", es: "Vas a casa despues de clase." },
+      { en: "You arrive at school early.", es: "Llegas a la escuela temprano." },
+      { en: "You leave at four.", es: "Te vas a las cuatro." },
+      { en: "You do your homework.", es: "Haces tu tarea." },
+      { en: "You choose a car.", es: "Eliges un coche." },
+      { en: "Your shoes are clean.", es: "Tus zapatos son limpios." },
+      { en: "Students pass the exam.", es: "Los estudiantes aprueban el examen." },
+      { en: "You drink milk.", es: "Bebes leche." },
+    ],
 
-  10: [
-    { en: "You wait for Ana.", es: "Esperas a Ana." },
-    { en: "You think about your friends.", es: "Piensas en tus amigos." },
-    { en: "You want to travel.", es: "Quieres viajar." },
-    { en: "You return home at six.", es: "Vuelves a casa a las seis." },
-    { en: "You are here now.", es: "Estas aqui ahora." },
-    { en: "You learn a lot.", es: "Aprendes mucho." },
-    { en: "You prefer these shoes.", es: "Prefieres estos zapatos." },
-    { en: "It is your turn to cook.", es: "Es tu turno de cocinar." },
-    { en: "You read many books.", es: "Lees muchos libros." },
-    { en: "We have enough time.", es: "Tenemos suficiente tiempo." },
-  ],
-};
+    10: [
+      { en: "You wait for Ana.", es: "Esperas a Ana." },
+      { en: "You think about your friends.", es: "Piensas en tus amigos." },
+      { en: "You want to travel.", es: "Quieres viajar." },
+      { en: "You return home at six.", es: "Vuelves a casa a las seis." },
+      { en: "You are here now.", es: "Estas aqui ahora." },
+      { en: "You learn a lot.", es: "Aprendes mucho." },
+      { en: "You prefer these shoes.", es: "Prefieres estos zapatos." },
+      { en: "It is your turn to cook.", es: "Es tu turno de cocinar." },
+      { en: "You read many books.", es: "Lees muchos libros." },
+      { en: "We have enough time.", es: "Tenemos suficiente tiempo." },
+    ],
+  };
 
+  // ✅ Present alias (what the rest of the app expects)
+  const Present = LEVELS;
+
+  // Deep copy helper (used to build Past/Future from Present safely)
   const deepCopy = obj => JSON.parse(JSON.stringify(obj));
-  const DATASETS = { Present: PRESENT, Past: deepCopy(PRESENT), Future: deepCopy(PRESENT) };
-const LEVELS = { /* ...the data... */ };
 
-// Alias for compatibility:
-const Present = LEVELS;
-
-
+  // ✅ Build datasets object using the correct Present variable
+  const DATASETS = { Present: Present, Past: deepCopy(Present), Future: deepCopy(Present) };
 
   // ===================== Global cheats =====================
   const clampCheats = n => Math.max(0, Math.min(GLOBAL_CHEATS_MAX, n|0));
@@ -171,16 +172,25 @@ const Present = LEVELS;
 
   // ===================== Compare =====================
   const norm = s => (s||"").trim();
-  const endsWithQM = s => norm(s).endsWith("?");
+
+  // ❌ Old: forced a trailing "?" (question-form). Not for statements.
+  // const endsWithQM = s => norm(s).endsWith("?");
+
   function core(s){
     let t = norm(s);
     if (t.startsWith("¿")) t = t.slice(1);
     if (t.endsWith("?"))  t = t.slice(0,-1);
+    // Keep accents visually, but normalize for comparison (and map ñ→n)
     t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     t = t.replace(/ñ/gi, "n");
     return t.replace(/\s+/g," ").toLowerCase();
   }
-  function cmpAnswer(user, expected){ if (!endsWithQM(user)) return false; return core(user) === core(expected); }
+
+  // ❌ Old: required the user's answer to end with "?"
+  // function cmpAnswer(user, expected){ if (!endsWithQM(user)) return false; return core(user) === core(expected); }
+
+  // ✅ New: simple normalized match (no question mark requirement)
+  function cmpAnswer(user, expected){ return core(user) === core(expected); }
 
   // ===================== Best/unlocks (per tense) =====================
   const STORAGE_PREFIX = "tqplus:v3";
@@ -198,7 +208,15 @@ const Present = LEVELS;
     const r=ensureRecognizer(); if(!r){onStatus&&onStatus(false);return;}
     if(recActive){try{r.stop();}catch{} recActive=false; onStatus&&onStatus(false);}
     try{
-      r.onresult=e=>{ const txt=(e.results[0]&&e.results[0][0]&&e.results[0][0].transcript)||""; const v=txt.trim(); input.value = v.endsWith("?")?v:(v+"?"); input.dispatchEvent(new Event("input",{bubbles:true})); };
+      r.onresult=e=>{
+        const txt=(e.results[0]&&e.results[0][0]&&e.results[0][0].transcript)||"";
+        const v=txt.trim();
+        // ❌ Old: forced a '?'
+        // input.value = v.endsWith("?")?v:(v+"?");
+        // ✅ New: plain statement input
+        input.value = v;
+        input.dispatchEvent(new Event("input",{bubbles:true}));
+      };
       r.onend=()=>{recActive=false; onStatus&&onStatus(false);};
       recActive=true; onStatus&&onStatus(true); r.start();
     }catch{ onStatus&&onStatus(false); }
@@ -224,12 +242,10 @@ const Present = LEVELS;
 
   function showPerfectCelebration(){
     injectCelebrationCSS();
-    // overlay
     const overlay = document.createElement("div");
     overlay.className = "tq-celebrate-overlay";
     document.body.appendChild(overlay);
 
-    // make 120 confetti bits across width
     const COLORS = ["#ff2d55","#ff9f0a","#ffd60a","#34c759","#0a84ff","#bf5af2","#ff375f"];
     const W = window.innerWidth;
     for (let i=0; i<120; i++){
@@ -246,13 +262,11 @@ const Present = LEVELS;
       overlay.appendChild(c);
     }
 
-    // banner
     const banner = document.createElement("div");
     banner.className = "tq-perfect-banner";
     banner.textContent = "PERFECT!";
     document.body.appendChild(banner);
 
-    // cleanup after 2.2s
     setTimeout(()=>{ overlay.remove(); banner.remove(); }, 2200);
   }
 
@@ -333,7 +347,7 @@ const Present = LEVELS;
 
       controls.appendChild(enBtn); controls.appendChild(esBtn); controls.appendChild(micBtn); p.appendChild(controls);
 
-      const input=document.createElement("input"); input.type="text"; input.placeholder="Type the Spanish here (must end with ?)";
+      const input=document.createElement("input"); input.type="text"; input.placeholder="Type the Spanish here";
       input.oninput=e=>{ quiz[i].user=e.target.value; };
       input.addEventListener("keydown",(e)=>{ if(e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey){ if(e.code==="KeyR"){e.preventDefault();enBtn.click();} else if(e.code==="KeyS"){e.preventDefault();esBtn.click();} else if(e.code==="KeyM"){e.preventDefault();micBtn.click();} }});
 
@@ -387,18 +401,16 @@ const Present = LEVELS;
        <div class="line" style="margin-top:8px;"><strong>${unlockMsg}</strong></div>
        <div class="line" style="margin-top:8px;">🎧 Spanish reads used this round: <strong>${cheatsUsedThisRound}</strong> &nbsp;|&nbsp; Global after commit: <strong>${after}/${GLOBAL_CHEATS_MAX}</strong></div>`;
 
-    // Celebrate on perfect
     if (perfect){
       showPerfectCelebration();
-      // subtle shake on the summary box so it "feels" like a win
       summary.classList.add("tq-shake");
       const bonusNote = document.createElement("div");
       bonusNote.className = "line";
       bonusNote.style.marginTop = "6px";
+      summary.appendChild(bonusNote);
       bonusNote.innerHTML = (after>before)
         ? `⭐ Perfect round! Spanish-read tokens: ${before} → ${after} (max ${GLOBAL_CHEATS_MAX}).`
         : `⭐ Perfect round! (Spanish-read tokens already at max ${GLOBAL_CHEATS_MAX}).`;
-      summary.appendChild(bonusNote);
     }
 
     const ul=document.createElement("ul");
