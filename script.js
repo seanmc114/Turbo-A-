@@ -1,9 +1,5 @@
-// Turbo: Q+ Edition — Statements Mode (confetti + banner + shake)
-// New game variant: Present statements (no questions).
-// Accents are kept. "ñ" is written as "n" (per your keyboard rule).
-// Storage keys are namespaced so this won't collide with the old game.
-//
-// Drop-in replacement for script.js
+// Turbo: Q+ — Statements Mode (self-contained)
+// Loads directly to level list + in-level tense dropdown (no external buttons needed)
 
 (() => {
   const $  = sel => document.querySelector(sel);
@@ -14,139 +10,128 @@
   const PENALTY_PER_WRONG   = 30;
   const BASE_THRESH = { 1:200, 2:180, 3:160, 4:140, 5:120, 6:100, 7:80, 8:60, 9:40 };
 
-  // ---- Unique namespace for THIS game (prevents clash with old data)
+  // Unique storage namespace for THIS game
   const GAME_ID = "tqplus:statements-v1";
-
-  // Global Spanish-read tokens (cap 7, commit-on-finish)
   const GLOBAL_CHEATS_MAX = 7;
   const GLOBAL_CHEATS_KEY = `${GAME_ID}:globalCheats`;
 
   // ===================== DATA (Present statements) =====================
-  // Accents kept. "ñ" is written as "n".
-  const LEVELS = {
+  // Accents kept; "ñ" written as "n" in strings (keyboard rule).
+  const Present = {
     1: [
-      { en: "You are happy.",            es: "Estás feliz." },
+      { en: "You are happy.",            es: "Estas feliz." },
       { en: "You are tall.",             es: "Eres alto." },
-      { en: "You are in class.",         es: "Estás en clase." },
+      { en: "You are in class.",         es: "Estas en clase." },
       { en: "You are kind.",             es: "Eres amable." },
-      { en: "You are tired.",            es: "Estás cansado." },
-      { en: "You are ready.",            es: "Estás lista." },        // feminine
-      { en: "You are calm.",             es: "Estás tranquilo." },
+      { en: "You are tired.",            es: "Estas cansado." },
+      { en: "You are ready.",            es: "Estas lista." },
+      { en: "You are calm.",             es: "Estas tranquilo." },
       { en: "You are funny.",            es: "Eres gracioso." },
       { en: "You are strong.",           es: "Eres fuerte." },
-      { en: "You are beautiful.",        es: "Eres bonita." },        // feminine
+      { en: "You are beautiful.",        es: "Eres bonita." },
     ],
-
     2: [
       { en: "It is a cat.",              es: "Es un gato." },
       { en: "It is a dog.",              es: "Es un perro." },
-      { en: "It is a sunny day.",        es: "Es un día soleado." },
-      { en: "It is cold.",               es: "Hace frío." },
-      { en: "You are at home.",          es: "Estás en casa." },
+      { en: "It is a sunny day.",        es: "Es un dia soleado." },
+      { en: "It is cold.",               es: "Hace frio." },
+      { en: "You are at home.",          es: "Estas en casa." },
       { en: "It is blue.",               es: "Es azul." },
       { en: "It is big.",                es: "Es grande." },
-      { en: "It is small.",              es: "Es pequeno." },          // pequeño → "pequeno" (no ñ)
+      { en: "It is small.",              es: "Es pequeno." },
       { en: "It is interesting.",        es: "Es interesante." },
       { en: "It is beautiful.",          es: "Es bonito." },
     ],
-
     3: [
       { en: "You live in Madrid.",       es: "Vives en Madrid." },
-      { en: "You study Spanish.",        es: "Estudias espanol." },    // español → "espanol"
-      { en: "You play football.",        es: "Juegas al fútbol." },
+      { en: "You study Spanish.",        es: "Estudias espanol." },
+      { en: "You play football.",        es: "Juegas al futbol." },
       { en: "You like chocolate.",       es: "Te gusta el chocolate." },
       { en: "You work hard.",            es: "Trabajas mucho." },
       { en: "You read books.",           es: "Lees libros." },
       { en: "You eat fruit.",            es: "Comes fruta." },
       { en: "You drink water.",          es: "Bebes agua." },
-      { en: "You listen to music.",      es: "Escuchas música." },
+      { en: "You listen to music.",      es: "Escuchas musica." },
       { en: "You sing well.",            es: "Cantas bien." },
     ],
-
     4: [
       { en: "Carlos is your teacher.",   es: "Carlos es tu profesor." },
-      { en: "Ana is at school.",         es: "Ana está en la escuela." },
+      { en: "Ana is at school.",         es: "Ana esta en la escuela." },
       { en: "You sleep early.",          es: "Duermes temprano." },
-      { en: "You run fast.",             es: "Corres rápido." },
-      { en: "You learn every day.",      es: "Aprendes cada día." },
+      { en: "You run fast.",             es: "Corres rapido." },
+      { en: "You learn every day.",      es: "Aprendes cada dia." },
       { en: "You work in an office.",    es: "Trabajas en una oficina." },
-      { en: "You like English.",         es: "Te gusta el inglés." },
+      { en: "You like English.",         es: "Te gusta el ingles." },
       { en: "You walk to school.",       es: "Caminas a la escuela." },
-      { en: "María is your friend.",     es: "María es tu amiga." },   // feminine
-      { en: "You are busy.",             es: "Estás ocupado." },
+      { en: "Maria is your friend.",     es: "Maria es tu amiga." },
+      { en: "You are busy.",             es: "Estas ocupado." },
     ],
-
     5: [
       { en: "They are students.",        es: "Son estudiantes." },
-      { en: "You are playing football.", es: "Juegas al fútbol." },
+      { en: "You are playing football.", es: "Juegas al futbol." },
       { en: "You are going to the park.",es: "Vas al parque." },
       { en: "You arrive early.",         es: "Llegas temprano." },
       { en: "You are never late.",       es: "Nunca llegas tarde." },
       { en: "You know a lot.",           es: "Sabes mucho." },
       { en: "You prefer apples.",        es: "Prefieres manzanas." },
-      { en: "The idea is good.",         es: "La idea es buena." },    // feminine agreement
+      { en: "The idea is good.",         es: "La idea es buena." },
       { en: "You speak Spanish.",        es: "Hablas espanol." },
       { en: "We have time.",             es: "Tenemos tiempo." },
     ],
-
     6: [
       { en: "Luis helps you.",           es: "Luis te ayuda." },
-      { en: "You need a pencil.",        es: "Necesitas un lápiz." },
+      { en: "You need a pencil.",        es: "Necesitas un lapiz." },
       { en: "Your house is big.",        es: "Tu casa es grande." },
       { en: "You eat lunch at twelve.",  es: "Almuerzas a las doce." },
       { en: "You study Spanish.",        es: "Estudias espanol." },
-      { en: "You go to school by bus.",  es: "Vas a la escuela en autobús." },
-      { en: "You are in class five.",    es: "Estás en la clase cinco." },
+      { en: "You go to school by bus.",  es: "Vas a la escuela en autobus." },
+      { en: "You are in class five.",    es: "Estas en la clase cinco." },
       { en: "It is your turn.",          es: "Es tu turno." },
       { en: "You have two pets.",        es: "Tienes dos mascotas." },
       { en: "It costs ten euros.",       es: "Cuesta diez euros." },
     ],
-
     7: [
       { en: "You help at home.",         es: "Ayudas en casa." },
       { en: "You eat breakfast at eight.", es: "Desayunas a las ocho." },
       { en: "You go out on weekends.",   es: "Sales los fines de semana." },
       { en: "You wake up early.",        es: "Te despiertas temprano." },
-      { en: "You run every morning.",    es: "Corres cada manana." },  // mañana → "manana"
+      { en: "You run every morning.",    es: "Corres cada manana." },
       { en: "You feel good today.",      es: "Te sientes bien hoy." },
-      { en: "You like this movie.",      es: "Te gusta esta película." },
-      { en: "Your phone is on the table.", es: "Tu teléfono está en la mesa." },
+      { en: "You like this movie.",      es: "Te gusta esta pelicula." },
+      { en: "Your phone is on the table.", es: "Tu telefono esta en la mesa." },
       { en: "You study two hours.",      es: "Estudias dos horas." },
       { en: "You have little homework.", es: "Tienes poca tarea." },
     ],
-
     8: [
       { en: "Someone is calling.",       es: "Alguien llama." },
       { en: "They are working.",         es: "Trabajan." },
-      { en: "You go to school every day.", es: "Vas a la escuela cada día." },
+      { en: "You go to school every day.", es: "Vas a la escuela cada dia." },
       { en: "You finish work at three.", es: "Terminas el trabajo a las tres." },
-      { en: "You are tired now.",        es: "Estás cansado ahora." },
+      { en: "You are tired now.",        es: "Estas cansado ahora." },
       { en: "You travel by train.",      es: "Viajas en tren." },
       { en: "You like the color blue.",  es: "Te gusta el color azul." },
-      { en: "Your bag is new.",          es: "Tu bolsa es nueva." },   // feminine
-      { en: "Many people live here.",    es: "Mucha gente vive aquí." },
-      { en: "You drink water every day.",es: "Bebes agua cada día." },
+      { en: "Your bag is new.",          es: "Tu bolsa es nueva." },
+      { en: "Many people live here.",    es: "Mucha gente vive aqui." },
+      { en: "You drink water every day.",es: "Bebes agua cada dia." },
     ],
-
     9: [
       { en: "You open the door.",        es: "Abres la puerta." },
-      { en: "You say good morning.",     es: "Dices buenos días." },
-      { en: "You go home after class.",  es: "Vas a casa después de clase." },
+      { en: "You say good morning.",     es: "Dices buenos dias." },
+      { en: "You go home after class.",  es: "Vas a casa despues de clase." },
       { en: "You arrive at school early.", es: "Llegas a la escuela temprano." },
       { en: "You leave at four.",        es: "Te vas a las cuatro." },
       { en: "You do your homework.",     es: "Haces tu tarea." },
       { en: "You choose a car.",         es: "Eliges un coche." },
-      { en: "Your shoes are clean.",     es: "Tus zapatos están limpios." },
+      { en: "Your shoes are clean.",     es: "Tus zapatos estan limpios." },
       { en: "Students pass the exam.",   es: "Los estudiantes aprueban el examen." },
       { en: "You drink milk.",           es: "Bebes leche." },
     ],
-
     10: [
       { en: "You wait for Ana.",         es: "Esperas a Ana." },
       { en: "You think about your friends.", es: "Piensas en tus amigos." },
       { en: "You want to travel.",       es: "Quieres viajar." },
       { en: "You return home at six.",   es: "Vuelves a casa a las seis." },
-      { en: "You are here now.",         es: "Estás aquí ahora." },
+      { en: "You are here now.",         es: "Estas aqui ahora." },
       { en: "You learn a lot.",          es: "Aprendes mucho." },
       { en: "You prefer these shoes.",   es: "Prefieres estos zapatos." },
       { en: "It is your turn to cook.",  es: "Es tu turno de cocinar." },
@@ -155,91 +140,14 @@
     ],
   };
 
-  // ✅ Present alias (what the rest of the app expects)
-  const Present = LEVELS;
-
-  // Deep copy helper (used to build Past/Future from Present safely)
   const deepCopy = obj => JSON.parse(JSON.stringify(obj));
+  const DATASETS = { Present, Past: deepCopy(Present), Future: deepCopy(Present) };
 
-  // ✅ Build datasets object using the correct Present variable
-  const DATASETS = { Present: Present, Past: deepCopy(Present), Future: deepCopy(Present) };
+  // ===================== STATE =====================
+  let CURRENT_TENSE = "Present";
+  let quiz = [], currentLevel = null, t0=0, timerId=null, submitted=false;
 
-  // ===== FAIL-SAFE TENSE ACCESS — guarantees access & switching =====
-  (function tenseAccessFailsafe(){
-    const canon = x => {
-      const k = String(x||"").trim().toLowerCase();
-      if (k==="present") return "Present";
-      if (k==="past")    return "Past";
-      if (k==="future")  return "Future";
-      return null;
-    };
-    function selectTense(t){
-      if (!DATASETS || !DATASETS[t]) { console.warn("[TQ] Missing dataset for:", t); return; }
-      CURRENT_TENSE = t;
-      $$("#tense-buttons .tense-button").forEach(b=>{
-        const key = canon(b.dataset.tense || b.textContent);
-        b.classList.toggle("active", key === t);
-        b.disabled = false;
-        b.style.pointerEvents = "auto";
-      });
-      backToLevels();
-    }
-    // Wire existing buttons (delegation + direct)
-    document.addEventListener("click", (e)=>{
-      const btn = e.target.closest && e.target.closest(".tense-button");
-      if (!btn || !btn.closest("#tense-buttons")) return;
-      e.preventDefault();
-      const t = canon(btn.dataset.tense || btn.textContent);
-      if (t) selectTense(t);
-    });
-    $$("#tense-buttons .tense-button").forEach(btn=>{
-      const t = canon(btn.dataset.tense || btn.textContent);
-      if (t) btn.onclick = ev => { ev.preventDefault(); selectTense(t); };
-    });
-    // Inject a tiny toolbar if page bar is absent/broken
-    function ensureInjectedBar(){
-      if (document.getElementById("tq-failsafe-tense")) return;
-      const bar = document.createElement("div");
-      bar.id = "tq-failsafe-tense";
-      bar.style.cssText = "position:fixed;top:10px;right:10px;z-index:99999;background:#fff;border:1px solid #ddd;border-radius:10px;box-shadow:0 6px 16px rgba(0,0,0,.15);padding:8px 10px;font:14px/1.2 system-ui,Segoe UI,Arial";
-      bar.innerHTML = `
-        <div style="font-weight:700;margin-bottom:6px">Tense</div>
-        <div style="display:flex;gap:6px">
-          <button data-k="Present">Present</button>
-          <button data-k="Past">Past</button>
-          <button data-k="Future">Future</button>
-        </div>
-      `;
-      bar.querySelectorAll("button[data-k]").forEach(b=>{
-        b.onclick = e => { e.preventDefault(); selectTense(b.dataset.k); };
-      });
-      document.body.appendChild(bar);
-    }
-    // Remove any celebration overlay that could block clicks
-    const ghost = document.querySelector(".tq-celebrate-overlay");
-    if (ghost) { try { ghost.remove(); } catch(_) {} }
-    // Boot: ensure access immediately
-    function boot(){
-      const haveButtons = !!document.querySelector("#tense-buttons .tense-button");
-      if (!haveButtons) ensureInjectedBar();
-      selectTense("Present"); // default in and render levels immediately
-    }
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", boot);
-    } else {
-      boot();
-    }
-    // Keyboard shortcuts P/A/F
-    document.addEventListener("keydown",(e)=>{
-      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
-      const k = e.key.toLowerCase();
-      if (k==="p") selectTense("Present");
-      if (k==="a") selectTense("Past");
-      if (k==="f") selectTense("Future");
-    });
-  })();
-
-  // ===================== Global cheats =====================
+  // ===================== Storage helpers =====================
   const clampCheats = n => Math.max(0, Math.min(GLOBAL_CHEATS_MAX, n|0));
   function getGlobalCheats(){
     const v = localStorage.getItem(GLOBAL_CHEATS_KEY);
@@ -249,29 +157,25 @@
   }
   function setGlobalCheats(n){ localStorage.setItem(GLOBAL_CHEATS_KEY, String(clampCheats(n))); }
 
-  // ===================== Compare (STATEMENTS MODE) =====================
-  const norm = s => (s||"").trim();
-  function core(s){
-    let t = norm(s);
-    // tolerate stray question marks
-    if (t.startsWith("¿")) t = t.slice(1);
-    if (t.endsWith("?"))  t = t.slice(0,-1);
-    // normalization for compare: strip accents; map ñ→n
-    t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    t = t.replace(/ñ/gi, "n");
-    return t.replace(/\s+/g," ").toLowerCase();
-  }
-  function cmpAnswer(user, expected){ return core(user) === core(expected); }
-
-  // ===================== Best/unlocks (per tense) =====================
   const STORAGE_PREFIX = `${GAME_ID}:best`;
   const bestKey = (tense, lvl) => `${STORAGE_PREFIX}:${tense}:${lvl}`;
   function getBest(tense, lvl){ const v = localStorage.getItem(bestKey(tense,lvl)); const n = v==null?null:parseInt(v,10); return Number.isFinite(n)?n:null; }
   function saveBest(tense, lvl, score){ const prev = getBest(tense,lvl); if (prev==null || score<prev) localStorage.setItem(bestKey(tense,lvl), String(score)); }
   function isUnlocked(tense, lvl){ if (lvl===1) return true; const need = BASE_THRESH[lvl-1]; const prev = getBest(tense,lvl-1); return prev!=null && (need==null || prev<=need); }
 
-  // ===================== Helpers =====================
-  function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]];} return a; }
+  // ===================== Compare (STATEMENTS MODE) =====================
+  const norm = s => (s||"").trim();
+  function core(s){
+    let t = norm(s);
+    if (t.startsWith("¿")) t = t.slice(1);
+    if (t.endsWith("?"))  t = t.slice(0,-1);
+    t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    t = t.replace(/ñ/gi, "n");
+    return t.replace(/\s+/g," ").toLowerCase();
+  }
+  function cmpAnswer(user, expected){ return core(user) === core(expected); }
+
+  // ===================== Speech helpers =====================
   function speak(text, lang="es-ES"){ try{ if(!("speechSynthesis" in window)) return; const u=new SpeechSynthesisUtterance(text); u.lang=lang; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);}catch{} }
   let rec=null, recActive=false;
   function ensureRecognizer(){ const SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return null; if(!rec){ rec=new SR(); rec.lang="es-ES"; rec.interimResults=false; rec.maxAlternatives=1; } return rec; }
@@ -282,7 +186,7 @@
       r.onresult=e=>{
         const txt=(e.results[0]&&e.results[0][0]&&e.results[0][0].transcript)||"";
         const v=txt.trim();
-        input.value = v; // statements (no auto '?')
+        input.value = v;
         input.dispatchEvent(new Event("input",{bubbles:true}));
       };
       r.onend=()=>{recActive=false; onStatus&&onStatus(false);};
@@ -307,13 +211,11 @@
     `;
     const s=document.createElement("style"); s.id="tqplus-anim-style"; s.textContent=css; document.head.appendChild(s);
   }
-
   function showPerfectCelebration(){
     injectCelebrationCSS();
     const overlay = document.createElement("div");
     overlay.className = "tq-celebrate-overlay";
     document.body.appendChild(overlay);
-
     const COLORS = ["#ff2d55","#ff9f0a","#ffd60a","#34c759","#0a84ff","#bf5af2","#ff375f"];
     const W = window.innerWidth;
     for (let i=0; i<120; i++){
@@ -329,20 +231,14 @@
       c.style.transform = `rotate(${Math.random()*360}deg)`;
       overlay.appendChild(c);
     }
-
     const banner = document.createElement("div");
     banner.className = "tq-perfect-banner";
     banner.textContent = "PERFECT!";
     document.body.appendChild(banner);
-
     setTimeout(()=>{ overlay.remove(); banner.remove(); }, 2200);
   }
 
   // ===================== UI flow =====================
-  let CURRENT_TENSE = "Present";
-  let quiz = [], currentLevel = null, t0=0, timerId=null, submitted=false;
-
-  // attempt-local token tracking (commit on finish)
   let cheatsUsedThisRound = 0;
   let globalSnapshotAtStart = 0;
   const attemptRemaining = () => Math.max(0, globalSnapshotAtStart - cheatsUsedThisRound);
@@ -369,26 +265,56 @@
   function renderLevels(){
     const host = $("#level-list"); if(!host) return;
     host.innerHTML = "";
+
+    // Inline tense dropdown (always works)
+    let bar = $("#inline-tense-switch");
+    if (!bar){
+      bar = document.createElement("div");
+      bar.id = "inline-tense-switch";
+      bar.style.cssText = "display:flex;align-items:center;gap:8px;margin:10px 0 14px 0;";
+      bar.innerHTML = `
+        <label for="inline-tense-select" style="font-weight:600;">Tense:</label>
+        <select id="inline-tense-select" style="padding:6px 8px;border:1px solid #ddd;border-radius:8px;">
+          <option value="Present">Present</option>
+          <option value="Past">Past</option>
+          <option value="Future">Future</option>
+        </select>
+      `;
+      host.appendChild(bar);
+      bar.querySelector("#inline-tense-select").addEventListener("change", (e)=>{
+        const t = e.target.value;
+        if (DATASETS[t]) { CURRENT_TENSE = t; renderLevels(); }
+      });
+    }
+    const sel = bar.querySelector("#inline-tense-select");
+    if (sel && sel.value !== CURRENT_TENSE) sel.value = CURRENT_TENSE;
+
+    // Level buttons
     const ds = DATASETS[CURRENT_TENSE] || {};
+    const list = document.createElement("div");
     const available = Object.keys(ds).map(n=>parseInt(n,10)).filter(Number.isFinite).sort((a,b)=>a-b);
     available.forEach(i=>{
       const unlocked = isUnlocked(CURRENT_TENSE,i);
       const best = getBest(CURRENT_TENSE,i);
       const btn = document.createElement("button");
-      btn.className="level-btn"; btn.disabled=!unlocked;
+      btn.className="level-btn";
+      btn.disabled=!unlocked;
+      btn.style.margin="6px";
       btn.textContent = unlocked?`Level ${i}`:`🔒 Level ${i}`;
       if (unlocked && best!=null){
-        const span=document.createElement("span"); span.className="best"; span.textContent=` (Best Score: ${best}s)`; btn.appendChild(span);
+        const span=document.createElement("span"); span.className="best"; span.textContent=` (Best: ${best}s)`; btn.appendChild(span);
       }
       if (unlocked) btn.onclick=()=>startLevel(i);
-      host.appendChild(btn);
+      list.appendChild(btn);
     });
-    host.style.display="flex"; const gm=$("#game"); if(gm) gm.style.display="none";
+    host.appendChild(list);
+
+    const gm=$("#game"); if(gm) gm.style.display="none";
   }
 
   function startLevel(level){
     currentLevel = level; submitted=false; cheatsUsedThisRound=0; globalSnapshotAtStart=getGlobalCheats();
-    const lv=$("#level-list"); if(lv) lv.style.display="none";
+    const lv=$("#level-list"); if(lv) lv.innerHTML=""; // hide hub
     const res=$("#results"); if(res) res.innerHTML="";
     const gm=$("#game"); if(gm) gm.style.display="block";
 
@@ -424,7 +350,7 @@
     updateESButtonsState(qwrap);
 
     const submit=$("#submit"); if(submit){ submit.disabled=false; submit.textContent="Finish & Check"; submit.onclick=finishAndCheck; }
-    const back=$("#back-button"); if(back){ back.style.display="inline-block"; back.onclick=backToLevels; }
+    const back=$("#back-button"); if(back){ back.style.display="inline-block"; back.onclick=()=>{ stopTimer(); const gm=$("#game"); if(gm) gm.style.display="none"; renderLevels(); }; }
   }
 
   function finishAndCheck(){
@@ -441,7 +367,6 @@
 
     const submit=$("#submit"); if(submit){ submit.disabled=true; submit.textContent="Checked"; }
 
-    // Unlock message
     let unlockMsg="";
     if (currentLevel<10){
       const need=BASE_THRESH[currentLevel];
@@ -451,14 +376,12 @@
       }
     } else unlockMsg="🏁 Final level — great work!";
 
-    // ===== Commit global tokens now =====
     const before = getGlobalCheats();
     let after = clampCheats(globalSnapshotAtStart - cheatsUsedThisRound);
     const perfect = (correct===quiz.length);
     if (perfect && after<GLOBAL_CHEATS_MAX) after = clampCheats(after+1);
     setGlobalCheats(after);
 
-    // Results UI
     const results=$("#results"); if(!results) return;
     const summary=document.createElement("div"); summary.className="result-summary";
     summary.innerHTML =
@@ -498,17 +421,13 @@
     summary.scrollIntoView({behavior:"smooth",block:"start"});
   }
 
-  function backToLevels(){ stopTimer(); const gm=$("#game"); if(gm) gm.style.display="none"; renderLevels(); }
-
-  // ===================== Init =====================
+  // ===================== Init: boot straight to level list =====================
   document.addEventListener("DOMContentLoaded", ()=>{
-    // init global cheats
     setGlobalCheats(getGlobalCheats());
-
-    // style default active if your HTML provides the buttons
-    const presentBtn = $(`#tense-buttons .tense-button[data-tense="Present"]`) || $$("#tense-buttons .tense-button")[0];
-    if (presentBtn) presentBtn.classList.add("active");
-
-    renderLevels();
+    const gm=$("#game"); if (gm) gm.style.display="none";
+    renderLevels(); // shows dropdown + level buttons (Present by default)
   });
+
+  // ===================== Small utilities =====================
+  function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0; [a[i],a[j]]=[a[j],a[i]];} return a; }
 })();
