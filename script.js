@@ -159,6 +159,51 @@
 
   // ✅ Build datasets object using the correct Present variable
   const DATASETS = { Present: Present, Past: deepCopy(Present), Future: deepCopy(Present) };
+// ---- TENSE BUTTON HOT-FIX (paste after DATASETS is defined) ----
+function normalizeTenseKey(x){
+  return String(x || "").trim().toLowerCase().replace(/\s+/g,"")
+    .replace(/^present$/,"Present")
+    .replace(/^past$/,"Past")
+    .replace(/^future$/,"Future");
+}
+
+function setActiveTenseButton(t){
+  $$("#tense-buttons .tense-button").forEach(b=>{
+    const key = normalizeTenseKey(b.dataset.tense || b.textContent);
+    b.classList.toggle("active", key === t);
+  });
+}
+
+function selectTense(t){
+  if (!DATASETS[t]) return;                // guard: only switch if exists
+  CURRENT_TENSE = t;
+  setActiveTenseButton(t);
+  backToLevels();                          // re-render level list
+}
+
+// 1) Event delegation: works even if buttons are added later
+document.addEventListener("click", (e)=>{
+  const btn = e.target.closest?.(".tense-button");
+  if (!btn) return;
+  if (!btn.closest("#tense-buttons")) return;
+  e.preventDefault();
+  const key = normalizeTenseKey(btn.dataset.tense || btn.textContent);
+  selectTense(key);
+});
+
+// 2) Fallback init if DOMContentLoaded missed or buttons were renamed
+(function ensureTenseInit(){
+  const defaultKey = "Present";
+  // If no active yet, try to set default
+  if (!$("#tense-buttons .tense-button.active")) {
+    setActiveTenseButton(defaultKey);
+  }
+  // If first render hasn’t happened, render now
+  if (!$("#level-list")?.children?.length) {
+    CURRENT_TENSE = defaultKey;
+    renderLevels();
+  }
+})();
 
   // ===================== Global cheats =====================
   const clampCheats = n => Math.max(0, Math.min(GLOBAL_CHEATS_MAX, n|0));
