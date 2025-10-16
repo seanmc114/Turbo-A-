@@ -693,16 +693,19 @@
 
   // ===================== Compare (STATEMENTS MODE) =====================
   const norm = s => (s||"").trim();
-  function core(s){
-    let t = norm(s);
-    if (t.startsWith("¿")) t = t.slice(1);
-    if (t.endsWith("?"))  t = t.slice(0,-1);
-    // Strip accents; map 'ñ'→'n' for comparison, so kids can type without them
-    t = t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    t = t.replace(/ñ/gi, "n");
-    return t.replace(/\s+/g," ").toLowerCase();
-  }
-  function cmpAnswer(user, expected){ return core(user) === core(expected); }
+
+function core(s){
+  // Keep accents; only trim spaces and optional question marks.
+  let t = norm(s);
+  if (t.startsWith("¿")) t = t.slice(1);
+  if (t.endsWith("?"))  t = t.slice(0,-1);
+  t = t.replace(/\s+/g, " ");   // collapse internal spaces
+  return t.toLowerCase();       // capitals don't matter; accents preserved
+}
+
+function cmpAnswer(user, expected){
+  return core(user) === core(expected);
+}
 
   // ===================== Speech helpers =====================
   function speak(text, lang="es-ES"){ try{ if(!("speechSynthesis" in window)) return; const u=new SpeechSynthesisUtterance(text); u.lang=lang; window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);}catch{} }
