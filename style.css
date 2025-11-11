@@ -1,204 +1,143 @@
-/* Visuals per your suite; padlocks and tints included. */
 body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  background-image: url("https://cdn.glitch.global/c63a5aa8-d1bd-4a24-9150-634a1dd0277c/background.jpg.jfif?v=1745349118534");
-  background-size: 80%;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-attachment: fixed;
-}
-
-.container {
+  font-family: "Segoe UI", sans-serif;
+  background: #fafafa;
+  color: #222;
   text-align: center;
-  width: 100%;
-  max-width: 600px;
-  padding: 30px;
-  background-color: rgba(255, 255, 255, 0.90);
-  border-radius: 20px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-  color: #333;
+  margin: 0;
+  padding: 20px;
 }
 
 h1 {
-  font-size: 6rem;
-  color: #FF6F61;
-  margin-bottom: 30px;
-}
-
-h1 span.turbo {
-  display: inline-block;
-  font-weight: bold;
-  color: #FF6F61;
-  transform: skewX(-10deg);
+  color: #e63946;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 #tense-buttons {
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
-#tense-buttons .tense-button {
-  background-color: #6e7fca;
-  color: white;
-  font-size: 1.2rem;
+.tense-button {
+  background: #eee;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 16px;
+  margin: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tense-button.active {
+  background: #e63946;
+  color: #fff;
+}
+
+.level-btn {
+  display: block;
+  margin: 10px auto;
   padding: 10px 20px;
+  font-size: 1rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  margin: 5px;
-  transition: all 0.3s ease;
+  background: #457b9d;
+  color: #fff;
+  transition: background 0.3s;
 }
 
-#tense-buttons .tense-button:hover {
-  background-color: #5e69b5;
-  transform: scale(1.05);
+.level-btn:hover {
+  background: #1d3557;
 }
 
-#tense-buttons .tense-button.active {
-  background-color: #1abc9c;
-}
-
-#level-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-#level-list button.level-btn {
-  font-size: 1.3rem;
-  padding: 15px;
-  background-color: #2ecc71;
-  color: white;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  width: 90%;
-  max-width: 340px;
-  transition: transform 0.2s, background-color 0.2s;
-}
-
-#level-list button.level-btn:hover:enabled {
-  background-color: #27ae60;
-  transform: scale(1.05);
-}
-
-#level-list button.level-btn:disabled {
-  background-color: #e74c3c; /* red when locked */
+.level-btn:disabled {
+  background: #ccc;
   cursor: not-allowed;
 }
 
-#game {
-  margin-top: 20px;
+.best {
+  font-size: 0.85rem;
+  color: #f1faee;
 }
 
-#timer {
-  font-size: 1.5rem;
-  color: #2980b9;
-  margin-bottom: 20px;
+#questions {
+  text-align: left;
+  max-width: 650px;
+  margin: 0 auto;
 }
 
-#questions .q {
-  margin: 10px 0;
-  padding: 8px 0;
+.q {
+  margin-bottom: 12px;
 }
 
-#questions .prompt {
-  font-size: 1.1rem;
-  color: #555;
-  margin-bottom: 6px;
+.prompt {
+  font-weight: 600;
 }
 
-#questions input {
-  font-size: 1.2rem;
-  padding: 10px 12px;
-  width: 90%;
-  max-width: 420px;
-  border-radius: 10px;
+input[type="text"] {
+  width: 100%;
+  padding: 6px 8px;
+  margin-top: 4px;
+  font-size: 1rem;
   border: 1px solid #ccc;
-  outline: none;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  border-radius: 6px;
 }
 
-/* Pastel tints after checking */
-#questions input.good {
-  background-color: rgba(46, 204, 113, 0.18); /* green */
-  border-color: rgba(46, 204, 113, 0.6);
+.good {
+  background: #d4edda;
 }
 
-#questions input.bad {
-  background-color: rgba(231, 76, 60, 0.18); /* red */
-  border-color: rgba(231, 76, 60, 0.6);
+.bad {
+  background: #f8d7da;
 }
 
 .controls {
-  margin-top: 8px;
+  margin-top: 20px;
 }
 
 #submit, #back-button, .try-again {
-  font-size: 1.2rem;
-  padding: 12px 20px;
-  background-color: #f39c12;
-  color: white;
-  border-radius: 12px;
-  cursor: pointer;
-  margin: 10px 6px;
+  background: #1d3557;
+  color: #fff;
   border: none;
-  transition: transform 0.2s, background-color 0.2s;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 4px;
+  transition: background 0.3s;
 }
 
 #submit:hover, #back-button:hover, .try-again:hover {
-  background-color: #e67e22;
-  transform: scale(1.06);
-}
-
-#results {
-  margin-top: 16px;
-  text-align: left;
-  display: flex;
-  justify-content: center;
-}
-
-#results ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  max-width: 520px;
-}
-
-#results li {
-  font-size: 1rem;
-  padding: 8px 10px;
-  margin: 6px 0;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
-
-#results li.correct {
-  background-color: rgba(46, 204, 113, 0.12);
-  border-color: rgba(46, 204, 113, 0.6);
-  color: #1f6f3f;
-}
-
-#results li.incorrect {
-  background-color: rgba(231, 76, 60, 0.12);
-  border-color: rgba(231, 76, 60, 0.6);
-  color: #8b2a22;
+  background: #457b9d;
 }
 
 .result-summary {
-  text-align: center;
-  margin: 8px 0 12px 0;
+  margin: 20px auto;
+  padding: 10px;
+  background: #f1faee;
+  border-radius: 8px;
+  max-width: 600px;
 }
 
 .result-summary .line {
   margin: 4px 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  max-width: 650px;
+  margin: 10px auto;
+}
+
+ul li.correct {
+  background: #d4edda;
+  padding: 6px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+}
+
+ul li.incorrect {
+  background: #f8d7da;
+  padding: 6px;
+  border-radius: 6px;
+  margin-bottom: 4px;
 }
